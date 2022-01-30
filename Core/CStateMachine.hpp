@@ -51,8 +51,5 @@ public:
 
 	void updateState(State newState) { this->m_currState = newState; }
 	void goThroughControlSystem(void);
-
-	//step method
-	void step(void);
 };
 #endif
