@@ -1,6 +1,8 @@
 #pragma once
 #include "CStateMachine.hpp"
 
+
+//add comment on line 5
 //condition checks
 bool CStateMachine::fault(void) const
 {
