@@ -3,6 +3,7 @@
 
 
 //added a test comment on line 5
+// line 6 comment
 //condition checks
 bool CStateMachine::fault(void) const
 {
