@@ -2,7 +2,7 @@
 #include "CStateMachine.hpp"
 
 
-//add comment on line 5
+//added a test comment on line 5
 //condition checks
 bool CStateMachine::fault(void) const
 {
