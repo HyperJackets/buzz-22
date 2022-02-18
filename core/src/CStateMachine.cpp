@@ -2,7 +2,17 @@
 #include "CStateMachine.hpp"
 
 
-//added a test comment on line 5
+//constructor
+CStateMachine::CStateMachine() 
+{
+	this->m_fVelocity = 0;
+	this->m_fAccel = 0;
+	//These values might not be accurated and might need to be updated later.
+	this->m_fBatteryTemp = 50; 
+	this->m_fMotorTemp = 50;
+	this->m_fCurrentDist = 0;
+}
+
 //condition checks
 bool CStateMachine::fault(void) const
 {
