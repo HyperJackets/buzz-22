@@ -7,5 +7,5 @@ namespace StateMachineSolution
 	TEST_CLASS(UnitTest1)
 {
 public:
-	TEST_METHOD()
+	TEST_METHOD(TestUpdateState)
 };
