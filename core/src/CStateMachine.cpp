@@ -11,6 +11,7 @@ CStateMachine::CStateMachine()
 	this->m_fBatteryTemp = 50; 
 	this->m_fMotorTemp = 50;
 	this->m_fCurrentDist = 0;
+	this->m_currState = UNLOADED;
 }
 
 //condition checks
