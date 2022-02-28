@@ -1,7 +1,6 @@
 #pragma once
 #include "CStateMachine.hpp"
 
-
 //constructor
 CStateMachine::CStateMachine() 
 {
