@@ -18,7 +18,7 @@ private:
 	State m_currState;
 
 	//constants
-	static const size_t THRESHOLD = 100, EXCEEDED_DIST = 100, TRACK_DIST = 100, BREAK_DIST = 100;
+	static const int THRESHOLD = 100, EXCEEDED_DIST = 100, TRACK_DIST = 100, BREAK_DIST = 100;
 
 public:
 	//constructor
