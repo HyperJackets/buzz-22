@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/SEAN/HyperJackets/buzz-22/out/build/x64-Debug/CMakeFiles/buzz22.dir/embed.manifest"

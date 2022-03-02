@@ -1,0 +1,2 @@
+C:/MinGW/bin/ar.exe qc libCStateMachine.a CMakeFiles/CStateMachine.dir/CStateMachine.cpp.obj
+C:/MinGW/bin/ranlib.exe libCStateMachine.a

@@ -1,0 +1,17 @@
+[
+{
+  "directory": "C:/SEAN/HyperJackets/buzz-22/build/core/src",
+  "command": "C:/MinGW/bin/g++.exe   -g -o CMakeFiles/CStateMachine.dir/CStateMachine.cpp.obj -c C:/SEAN/HyperJackets/buzz-22/core/src/CStateMachine.cpp",
+  "file": "C:/SEAN/HyperJackets/buzz-22/core/src/CStateMachine.cpp"
+},
+{
+  "directory": "C:/SEAN/HyperJackets/buzz-22/build/core/src",
+  "command": "C:/MinGW/bin/g++.exe   -g -o CMakeFiles/main.dir/main.cpp.obj -c C:/SEAN/HyperJackets/buzz-22/core/src/main.cpp",
+  "file": "C:/SEAN/HyperJackets/buzz-22/core/src/main.cpp"
+},
+{
+  "directory": "C:/SEAN/HyperJackets/buzz-22/build/core/test",
+  "command": "C:/MinGW/bin/g++.exe  @CMakeFiles/Test.dir/includes_CXX.rsp -g -o CMakeFiles/Test.dir/test.cpp.obj -c C:/SEAN/HyperJackets/buzz-22/core/test/test.cpp",
+  "file": "C:/SEAN/HyperJackets/buzz-22/core/test/test.cpp"
+}
+]
