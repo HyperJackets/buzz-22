@@ -1,5 +1,6 @@
+#include "C:\SEAN\HyperJackets\buzz-22\core\src\CStateMachine.hpp"
 #include <iostream>
 
 int main(int, char**) {
-    std::cout << "Hello, testing!\n";
+    std::cout << "Testing State Machine" << std::endl;
 }
