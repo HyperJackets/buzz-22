@@ -38,6 +38,11 @@ bool CStateMachine::hasFinishedTrack(void) const
 	return this->getCurrentDist() > EXCEEDED_DIST;
 }
 
+bool CStateMachine::isHealthy(void) const
+{
+	return this->getHealth() && this->getLocalizationHealth();
+}
+
 bool CStateMachine::isMoving(void) const
 {
 	return this->getVelocity() != 0 || this->getAccel() != 0;
@@ -46,11 +51,6 @@ bool CStateMachine::isMoving(void) const
 bool CStateMachine::hasMoved(void) const
 {
 	return this->getCurrentDist() != 0;
-}
-
-bool CStateMachine::isHealthy(void) const
-{
-	return this->getHealth() && this->getLocalizationHealth();
 }
 
 bool CStateMachine::temperatureCheck(void) const
@@ -71,28 +71,6 @@ bool CStateMachine::launching(void) const
 bool CStateMachine::breaking(void) const
 {
 	return this->getBreakEngagement() && !this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
-}
-
-void CStateMachine::setState_safeToApproach(void)
-{
-	this->setLocalizationEngagement(true);
-}
-
-void CStateMachine::setState_launching(void)
-{
-	this->setMotorEngagement(true);
-}
-
-void CStateMachine::setState_breaking(void)
-{
-	this->setBreakEngagement(true);
-	this->setMotorEngagement(false);
-}
-
-void CStateMachine::setState_crawling(void)
-{
-	this->setBreakEngagement(false);
-	this->setMotorEngagement(true);
 }
 
 //This method goes through the various stages of the control system. 

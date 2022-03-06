@@ -19,7 +19,9 @@ private:
 	bool m_bHealth, m_bLocalizationHealth;
 	bool m_bBreak, m_bMotor, m_bLocalization, m_bBMS, m_bCommunications; //These variables denote if the interface is engaged or not.
 	State m_currState;
-	bool m_bIsUnloaded, m_bIsReadyToLaunch;
+	//These variables are changed when a GUI is pressed on the dashboard.
+	bool m_bIsUnloaded = true;
+	bool m_bIsReadyToLaunch = false; 
 
 	//constants
 	static const int THRESHOLD = 100, EXCEEDED_DIST = 100, TRACK_DIST = 100, BREAK_DIST = 100;
@@ -55,7 +57,6 @@ public:
 	void setCommunicationsEngagement(bool bCommunications) {this->m_bCommunications = bCommunications;}
 
 	//condition checks
-	void handleFault(void);
 	bool hasFinishedTrack(void) const;
 	bool isHealthy(void) const;
 	bool isMoving(void) const;
@@ -65,14 +66,8 @@ public:
 	bool launching(void) const;
 	bool breaking(void) const;
 
-	//methods that handle changes to state, in terms of engagement
-	void setState_safeToApproach(void);
-	void setState_launching(void);
-	void setState_breaking(void);
-	void setState_crawling(void);
-
 	//other methods
-
+	void handleFault(void);
 	void updateState(State newState) { this->m_currState = newState; }
 	void goThroughControlSystem(void);
 
