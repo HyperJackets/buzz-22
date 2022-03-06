@@ -1,7 +1,17 @@
 [
 {
-  "directory": "C:/SEAN/HyperJackets/buzz-22/build",
-  "command": "C:/MinGW/bin/g++.exe   -g -o CMakeFiles/buzz22.dir/main.cpp.obj -c C:/SEAN/HyperJackets/buzz-22/main.cpp",
-  "file": "C:/SEAN/HyperJackets/buzz-22/main.cpp"
+  "directory": "/Users/vulcan/work/HJ/buzz-22/build/core/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -o CMakeFiles/CStateMachine.dir/CStateMachine.cpp.o -c /Users/vulcan/work/HJ/buzz-22/core/src/CStateMachine.cpp",
+  "file": "/Users/vulcan/work/HJ/buzz-22/core/src/CStateMachine.cpp"
+},
+{
+  "directory": "/Users/vulcan/work/HJ/buzz-22/build/core/src",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -o CMakeFiles/main.dir/main.cpp.o -c /Users/vulcan/work/HJ/buzz-22/core/src/main.cpp",
+  "file": "/Users/vulcan/work/HJ/buzz-22/core/src/main.cpp"
+},
+{
+  "directory": "/Users/vulcan/work/HJ/buzz-22/build/core/test",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  -I/src -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -o CMakeFiles/Test.dir/test.cpp.o -c /Users/vulcan/work/HJ/buzz-22/core/test/test.cpp",
+  "file": "/Users/vulcan/work/HJ/buzz-22/core/test/test.cpp"
 }
 ]
