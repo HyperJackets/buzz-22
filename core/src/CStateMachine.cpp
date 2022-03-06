@@ -80,7 +80,7 @@ void CStateMachine::step(void)
 		return;
 	}
 
-	if (this->getCurrState() == UNLOADED && !this->causeForConcern())
+	if (this->getCurrState() == UNLOADED && this->isUnloaded() && !this->causeForConcern())
 	{
 		this->updateState(LOADED);
 	}
@@ -88,7 +88,7 @@ void CStateMachine::step(void)
 	if (this->getCurrState() == LOADED && !this->causeForConcern())
 	{
 		this->updateState(SAFE_TO_APPROACH);
-		//Manually set state to loaded via manual GUI control?
+		//Manually set state to loaded via manual GUI control.
 		//...
 	}
 
@@ -96,7 +96,14 @@ void CStateMachine::step(void)
 	{
 		this->updateState(READY_TO_LAUNCH);
 		this->setState_safeToApproach();
-		//Manually launch the pod via manual GUI control.
+		//...
+	}
+
+	if (this->getCurrState() == READY_TO_LAUNCH && this->isReadyToLaunch())
+	{
+		this->updateState(LAUNCHING);
+		this->setState_launching();
+		//Manually set state to launching via manual GUI control.
 		//...
 	}
 

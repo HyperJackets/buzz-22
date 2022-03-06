@@ -19,6 +19,7 @@ private:
 	bool m_bHealth, m_bLocalizationHealth;
 	bool m_bBreak, m_bMotor, m_bLocalization, m_bBMS, m_bCommunications; //These variables denote if the interface is engaged or not.
 	State m_currState;
+	bool m_bIsUnloaded, m_bIsReadyToLaunch;
 
 	//constants
 	static const int THRESHOLD = 100, EXCEEDED_DIST = 100, TRACK_DIST = 100, BREAK_DIST = 100;
@@ -43,6 +44,8 @@ public:
 	bool getBMSEngagement(void) const { return this->m_bBMS; }
 	bool getCommunicationsEngagement(void) const { return this->m_bCommunications; }
 	State getCurrState(void) const { return this->m_currState; }
+	bool isUnloaded(void) const {return this->m_bIsUnloaded;}
+	bool isReadyToLaunch(void) const {return this->m_bIsReadyToLaunch;}
 
 	//set methods for engagement
 	void setLocalizationEngagement(bool bLocalization) {this->m_bLocalization = bLocalization;}
