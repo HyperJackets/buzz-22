@@ -1,6 +1,9 @@
 //HyperJackets State Machine v1.0
 //Author: Sean Liu
 //Language Used: C++
+
+//Push changes to current branch as sean, and see changes online at https://github.com/HyperJackets/buzz-22/tree/sean
+
 #pragma once
 #ifndef C_STATE_MACHINE_HPP
 #define C_STATE_MACHINE_HPP
