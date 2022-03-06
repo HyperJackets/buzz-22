@@ -4,11 +4,14 @@
 
 void initialCheck(CStateMachine* pSM)
 {
+    //check numerical data
     assert(pSM->getVelocity() == 0);
     assert(pSM->getAccel() == 0);
     assert(pSM->getBatteryTemp() == 50);
     assert(pSM->getMotorTemp() == 50);
     assert(pSM->getCurrentDist() == 0);
+
+    //check states and engagements
     assert(pSM->getHealth());
     assert(pSM->getLocalizationHealth());
     assert(!pSM->getBreakEngagement());
@@ -17,6 +20,10 @@ void initialCheck(CStateMachine* pSM)
     assert(pSM->getBMSEngagement());
     assert(pSM->getCommunicationsEngagement());
     assert(pSM->getCurrState() == UNLOADED);
+
+    //check other conditions
+    assert(!pSM->fault());
+    assert(!pSM->causeForConcern());
 }
 
 void displayStatesAndEngagements(CStateMachine* pSM)
@@ -26,10 +33,11 @@ void displayStatesAndEngagements(CStateMachine* pSM)
 
 int main(int, char**) {
     std::cout << "----------Testing State Machine----------" << std::endl;
+
     CStateMachine* mySM1 = new CStateMachine();
     //NOTE: Instead of printing, I should use asserts to check if conditions are what we expect.
-    //displayInfo(mySM1);
     initialCheck(mySM1);
+
 
     std::cout << "----------Done testing----------" << std::endl;
 }
