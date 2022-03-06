@@ -75,6 +75,11 @@ void CStateMachine::setState_crawling(void)
 //This method goes through the various stages of the control system. 
 void CStateMachine::step(void)
 {
+	if (this->fault())
+	{
+		return;
+	}
+
 	if (this->getCurrState() == UNLOADED && !this->causeForConcern())
 	{
 		this->updateState(LOADED);
