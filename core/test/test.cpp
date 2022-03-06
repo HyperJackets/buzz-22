@@ -18,6 +18,7 @@ void displayStatesAndEngagements(CStateMachine* pSM)
 int main(int, char**) {
     std::cout << "----------Testing State Machine----------" << std::endl;
     CStateMachine* mySM1 = new CStateMachine();
+    //NOTE: Instead of printing, I should use asserts to check if conditions are what we expect.
     displayInfo(mySM1);
     std::cout << "----------Done testing----------" << std::endl;
 }
