@@ -16,7 +16,7 @@ CStateMachine::CStateMachine()
 //condition checks
 bool CStateMachine::fault(void) const
 {
-	return !this->getHealth() || !this->getLocalizationHealth() || this->getBatteryTemp() >= THRESHOLD || this->getMotorTemp() >= THRESHOLD || this->getCurrentDist() >= TRACK_DIST;
+	return this->getBreakEngagement() && !this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
 }
 
 bool CStateMachine::causeForConcern(void) const
@@ -61,6 +61,7 @@ void CStateMachine::setState_crawling(void)
 	this->setMotorEngagement(true);
 }
 
+//This method goes through the various stages of the control system.
 void CStateMachine::step(void)
 {
 	if (this->getCurrState() == LOADED)
@@ -72,6 +73,7 @@ void CStateMachine::step(void)
 	if (this->getCurrState() == SAFE_TO_APPROACH)
 	{
 		this->updateState(READY_TO_LAUNCH);
+		this->setState_safeToApproach();
 		//Manually launch the pod via manual GUI control.
 		//...
 	}
@@ -79,20 +81,27 @@ void CStateMachine::step(void)
 	if ((this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST) && this->getCurrState() == LAUNCHING)
 	{
 		this->updateState(BREAKING);
+		this->setState_breaking();
 		//...
 	}
 
 	if (this->getCurrentDist() < TRACK_DIST && this->getCurrState() == BREAKING)
 	{
 		this->updateState(CRAWLING);
+		this->setState_crawling();
 		//...
+		break;
 	}
 }
 
 void CStateMachine::goThroughControlSystem(void)
 {
-	while (!this->fault() && !this->causeForConcern())
+	if (!this->fault()) 
 	{
 		this->step();
 	}
+	// while (!this->fault() && !this->causeForConcern())
+	// {
+	// 	this->step();
+	// }
 }
