@@ -124,7 +124,7 @@ void CStateMachine::step(void)
 
 void CStateMachine::goThroughControlSystem(void)
 {
-	while (!this->isHealthy() || !this->temperatureCheck() || this->hasFinishedTrack())
+	while (this->getCurrState() != FAULT)
 	{
 		this->step();
 	}

@@ -31,7 +31,8 @@ int main(int, char**) {
     //NOTE: Instead of printing, I should use asserts to check if conditions are what we expect.
     initialCheck(mySM1);
     std::cout << "Going through control system" << std::endl;
-    mySM1->goThroughControlSystem();
+
+    //Step once, and make sure that all variables are what we EXPECT to see. Also change boolean GUI variables and numerical data.
 
     std::cout << "----------Done testing----------" << std::endl;
 }
