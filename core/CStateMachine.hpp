@@ -47,6 +47,12 @@ public:
 	bool launching(void) const;
 	bool breaking(void) const;
 
+	//methods that handle transition between states in terms of various engagements
+	void setState_safeToApproach(void);
+	void setState_launching(void);
+	void setState_breaking(void);
+	void setState_crawling(void);
+
 	//other methods
 
 	void updateState(State newState) { this->m_currState = newState; }
