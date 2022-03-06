@@ -78,6 +78,7 @@ void CStateMachine::step(void)
 	if (this->getCurrState() == LOADED)
 	{
 		this->updateState(SAFE_TO_APPROACH);
+		//Manually set state to loaded via manual GUI control?
 		//...
 	}
 
