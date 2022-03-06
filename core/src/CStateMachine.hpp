@@ -25,7 +25,8 @@ public:
 	CStateMachine();
 
 	//methods
-	//For now we are just doing temporary placeholder values. These should be changed and integrated with hardware later.
+
+	//get methods
 	double getVelocity(void) const { return this->m_fVelocity; }
 	double getAccel(void) const { return this->m_fAccel; }
 	double getBatteryTemp(void) const { return this->m_fBatteryTemp; }
@@ -34,11 +35,16 @@ public:
 	bool getHealth(void) const { return this->m_bHealth; }
 	bool getLocalizationHealth(void) const { return this->m_bLocalizationHealth; }
 	bool getBreakEngagement(void) const { return this->m_bBreak; }
-	bool getMotorEngagement(void) const { return this->m_bLocalization; }
+	bool getMotorEngagement(void) const { return this->m_bMotor; }
 	bool getLocalizationEngagement(void) const { return this->m_bLocalization; }
 	bool getBMSEngagement(void) const { return this->m_bBMS; }
 	bool getCommunicationsEngagement(void) const { return this->m_bCommunications; }
 	State getCurrState(void) const { return this->m_currState; }
+
+	//set methods
+	void setLocalizationEngagement(bool bLocalization) {this->m_bLocalization = bLocalization;}
+	void setMotorEngagement(bool bMotor) {this->m_bMotor = bMotor;}
+	void setBreakEngagement(bool bBreak) {this->m_bBreak = bBreak;}
 
 	//condition checks
 	bool fault(void) const;

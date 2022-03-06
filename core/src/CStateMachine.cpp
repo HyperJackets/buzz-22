@@ -39,6 +39,28 @@ bool CStateMachine::breaking(void) const
 	return this->getBreakEngagement() && !this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
 }
 
+void CStateMachine::setState_safeToApproach(void)
+{
+	this->setLocalizationEngagement(true);
+}
+
+void CStateMachine::setState_launching(void)
+{
+	this->setMotorEngagement(true);
+}
+
+void CStateMachine::setState_breaking(void)
+{
+	this->setBreakEngagement(true);
+	this->setMotorEngagement(false);
+}
+
+void CStateMachine::setState_crawling(void)
+{
+	this->setBreakEngagement(false);
+	this->setMotorEngagement(true);
+}
+
 void CStateMachine::step(void)
 {
 	if (this->getCurrState() == LOADED)
