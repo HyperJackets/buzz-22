@@ -4,12 +4,22 @@
 //constructor
 CStateMachine::CStateMachine() 
 {
+	//initialize numerical data
 	this->m_fVelocity = 0;
 	this->m_fAccel = 0;
 	//These values might not be accurated and might need to be updated later.
 	this->m_fBatteryTemp = 50; 
 	this->m_fMotorTemp = 50;
 	this->m_fCurrentDist = 0;
+
+	//initialize states and engagements
+	this->m_bHealth = true;
+	this->m_bLocalizationHealth = true;
+	this->m_bBreak = false;
+	this->m_bMotor = false;
+	this->m_bLocalization = false;
+	this->m_bBMS = true;
+	this->m_bCommunications = true;
 	this->m_currState = UNLOADED;
 }
 
@@ -21,7 +31,8 @@ bool CStateMachine::fault(void) const
 
 bool CStateMachine::causeForConcern(void) const
 {
-	return this->getVelocity() != 0 || this->getAccel() != 0 || this->getBatteryTemp() >= THRESHOLD || this->getMotorTemp() >= THRESHOLD || this->getCurrentDist() != 0 || !this->getLocalizationHealth();
+	return this->getVelocity() != 0 || this->getAccel() != 0 || this->getBatteryTemp() >= THRESHOLD || this->getMotorTemp() >= THRESHOLD 
+		|| this->getCurrentDist() != 0 || !this->getLocalizationHealth();
 }
 
 bool CStateMachine::readyToLaunch(void) const
