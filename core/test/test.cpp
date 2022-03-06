@@ -3,4 +3,5 @@
 
 int main(int, char**) {
     std::cout << "Testing State Machine" << std::endl;
+    CStateMachine* mySM1 = new CStateMachine();
 }
