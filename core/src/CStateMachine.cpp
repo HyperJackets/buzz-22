@@ -84,14 +84,14 @@ void CStateMachine::step(void)
 	else if (this->getCurrState() == UNLOADED && this->isUnloaded())
 	{
 		this->updateState(LOADED);
-	}
-	else if (this->getCurrState() == LOADED)
-	{
-		this->updateState(SAFE_TO_APPROACH);
 		//Manually set state to loaded via manual GUI control.
 		//...
+	}
+	else if (this->getCurrState() == LOADED && !this->isMoving() && !this->hasMoved())
+	{
+		this->updateState(SAFE_TO_APPROACH);
 	} 
-	else if (this->getCurrState() == SAFE_TO_APPROACH)
+	else if (this->getCurrState() == SAFE_TO_APPROACH && !this->isMoving())
 	{
 		this->updateState(READY_TO_LAUNCH);
 		this->setLocalizationEngagement(true);
@@ -104,14 +104,14 @@ void CStateMachine::step(void)
 		//Manually set state to launching via manual GUI control.
 		//...
 	}
-	else if ((this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST) && this->getCurrState() == LAUNCHING && this->isHealthy() && this->temperatureCheck())
+	else if (this->getCurrState() == LAUNCHING && (this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST) && this->isHealthy() && this->temperatureCheck())
 	{
 		this->updateState(BREAKING);
 		this->setBreakEngagement(true);
 		this->setMotorEngagement(false);
 		//...
 	}
-	else if (this->getCurrentDist() < TRACK_DIST && this->getCurrState() == BREAKING)
+	else if (this->getCurrState() == BREAKING && this->getCurrentDist() < TRACK_DIST)
 	{
 		this->updateState(CRAWLING);
 		this->setBreakEngagement(false);
