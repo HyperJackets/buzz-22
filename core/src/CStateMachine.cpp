@@ -90,7 +90,7 @@ void CStateMachine::step(void)
 		this->updateState(CRAWLING);
 		this->setState_crawling();
 		//...
-		break;
+		return;
 	}
 }
 
