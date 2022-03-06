@@ -44,7 +44,7 @@ public:
 	bool getCommunicationsEngagement(void) const { return this->m_bCommunications; }
 	State getCurrState(void) const { return this->m_currState; }
 
-	//set methods
+	//set methods for engagement
 	void setLocalizationEngagement(bool bLocalization) {this->m_bLocalization = bLocalization;}
 	void setMotorEngagement(bool bMotor) {this->m_bMotor = bMotor;}
 	void setBreakEngagement(bool bBreak) {this->m_bBreak = bBreak;}

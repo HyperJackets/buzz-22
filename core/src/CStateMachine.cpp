@@ -72,17 +72,22 @@ void CStateMachine::setState_crawling(void)
 	this->setMotorEngagement(true);
 }
 
-//This method goes through the various stages of the control system.
+//This method goes through the various stages of the control system. 
 void CStateMachine::step(void)
 {
-	if (this->getCurrState() == LOADED)
+	if (this->getCurrState() == UNLOADED && !this->causeForConcern())
+	{
+		this->updateState(LOADED);
+	}
+
+	if (this->getCurrState() == LOADED && !this->causeForConcern())
 	{
 		this->updateState(SAFE_TO_APPROACH);
 		//Manually set state to loaded via manual GUI control?
 		//...
 	}
 
-	if (this->getCurrState() == SAFE_TO_APPROACH)
+	if (this->getCurrState() == SAFE_TO_APPROACH && !this->causeForConcern())
 	{
 		this->updateState(READY_TO_LAUNCH);
 		this->setState_safeToApproach();
