@@ -80,6 +80,7 @@ void CStateMachine::step(void)
 	{
 		this->updateState(FAULT);
 		this->handleFault();
+		return;
 	} 
 	else if (this->getCurrState() == UNLOADED && this->isUnloaded())
 	{
@@ -123,9 +124,8 @@ void CStateMachine::step(void)
 
 void CStateMachine::goThroughControlSystem(void)
 {
-	this->step();
-	// while (!this->fault() && !this->causeForConcern())
-	// {
-	// 	this->step();
-	// }
+	while (!this->isHealthy() || !this->temperatureCheck() || this->hasFinishedTrack())
+	{
+		this->step();
+	}
 }
