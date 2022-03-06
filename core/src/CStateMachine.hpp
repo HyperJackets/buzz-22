@@ -51,10 +51,16 @@ public:
 	void setLocalizationEngagement(bool bLocalization) {this->m_bLocalization = bLocalization;}
 	void setMotorEngagement(bool bMotor) {this->m_bMotor = bMotor;}
 	void setBreakEngagement(bool bBreak) {this->m_bBreak = bBreak;}
+	void setBMSEngagement(bool bBMS) {this->m_bBMS = bBMS;}
+	void setCommunicationsEngagement(bool bCommunications) {this->m_bCommunications = bCommunications;}
 
 	//condition checks
-	bool fault(void) const;
-	bool causeForConcern(void) const;
+	void handleFault(void);
+	bool hasFinishedTrack(void) const;
+	bool isHealthy(void) const;
+	bool isMoving(void) const;
+	bool hasMoved(void) const;
+	bool temperatureCheck(void) const;
 	bool readyToLaunch(void) const;
 	bool launching(void) const;
 	bool breaking(void) const;

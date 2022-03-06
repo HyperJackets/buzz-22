@@ -22,8 +22,6 @@ void initialCheck(CStateMachine* pSM)
     assert(pSM->getCurrState() == UNLOADED);
 
     //check other conditions
-    assert(!pSM->fault());
-    assert(!pSM->causeForConcern());
 }
 
 int main(int, char**) {

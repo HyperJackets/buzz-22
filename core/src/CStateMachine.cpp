@@ -24,15 +24,38 @@ CStateMachine::CStateMachine()
 }
 
 //condition checks
-bool CStateMachine::fault(void) const
+void CStateMachine::handleFault(void) 
 {
-	return this->getBreakEngagement() && !this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
+	this->setBreakEngagement(true);
+	this->setMotorEngagement(false);
+	this->setLocalizationEngagement(true);
+	this->setBMSEngagement(true);
+	this->setCommunicationsEngagement(true);
 }
 
-bool CStateMachine::causeForConcern(void) const
+bool CStateMachine::hasFinishedTrack(void) const
 {
-	return this->getVelocity() != 0 || this->getAccel() != 0 || this->getBatteryTemp() >= THRESHOLD || this->getMotorTemp() >= THRESHOLD 
-		|| this->getCurrentDist() != 0 || !this->getLocalizationHealth();
+	return this->getCurrentDist() > EXCEEDED_DIST;
+}
+
+bool CStateMachine::isMoving(void) const
+{
+	return this->getVelocity() != 0 || this->getAccel() != 0;
+}
+
+bool CStateMachine::hasMoved(void) const
+{
+	return this->getCurrentDist() != 0;
+}
+
+bool CStateMachine::isHealthy(void) const
+{
+	return this->getHealth() && this->getLocalizationHealth();
+}
+
+bool CStateMachine::temperatureCheck(void) const
+{
+	this->getBatteryTemp() < THRESHOLD && this->getMotorTemp() < THRESHOLD;
 }
 
 bool CStateMachine::readyToLaunch(void) const
@@ -75,49 +98,46 @@ void CStateMachine::setState_crawling(void)
 //This method goes through the various stages of the control system. 
 void CStateMachine::step(void)
 {
-	if (this->fault())
+	if (!this->isHealthy() || !this->temperatureCheck() || this->hasFinishedTrack())
 	{
-		return;
-	}
-
-	if (this->getCurrState() == UNLOADED && this->isUnloaded() && !this->causeForConcern())
+		this->updateState(FAULT);
+		this->handleFault();
+	} 
+	else if (this->getCurrState() == UNLOADED && this->isUnloaded())
 	{
 		this->updateState(LOADED);
 	}
-
-	if (this->getCurrState() == LOADED && !this->causeForConcern())
+	else if (this->getCurrState() == LOADED)
 	{
 		this->updateState(SAFE_TO_APPROACH);
 		//Manually set state to loaded via manual GUI control.
 		//...
-	}
-
-	if (this->getCurrState() == SAFE_TO_APPROACH && !this->causeForConcern())
+	} 
+	else if (this->getCurrState() == SAFE_TO_APPROACH)
 	{
 		this->updateState(READY_TO_LAUNCH);
-		this->setState_safeToApproach();
+		this->setLocalizationEngagement(true);
 		//...
 	}
-
-	if (this->getCurrState() == READY_TO_LAUNCH && this->isReadyToLaunch())
+	else if (this->getCurrState() == READY_TO_LAUNCH && this->isReadyToLaunch())
 	{
 		this->updateState(LAUNCHING);
-		this->setState_launching();
+		this->setMotorEngagement(true);
 		//Manually set state to launching via manual GUI control.
 		//...
 	}
-
-	if ((this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST) && this->getCurrState() == LAUNCHING)
+	else if ((this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST) && this->getCurrState() == LAUNCHING && this->isHealthy() && this->temperatureCheck())
 	{
 		this->updateState(BREAKING);
-		this->setState_breaking();
+		this->setBreakEngagement(true);
+		this->setMotorEngagement(false);
 		//...
 	}
-
-	if (this->getCurrentDist() < TRACK_DIST && this->getCurrState() == BREAKING)
+	else if (this->getCurrentDist() < TRACK_DIST && this->getCurrState() == BREAKING)
 	{
 		this->updateState(CRAWLING);
-		this->setState_crawling();
+		this->setBreakEngagement(false);
+		this->setMotorEngagement(true);
 		//...
 		return;
 	}
@@ -125,10 +145,7 @@ void CStateMachine::step(void)
 
 void CStateMachine::goThroughControlSystem(void)
 {
-	if (!this->fault()) 
-	{
-		this->step();
-	}
+	this->step();
 	// while (!this->fault() && !this->causeForConcern())
 	// {
 	// 	this->step();
