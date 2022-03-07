@@ -25,15 +25,22 @@ void initialCheck(CStateMachine* pSM)
 void testAllGood()
 {
     CStateMachine* pSM = new CStateMachine();
-    //Transition from UNLOADED to LOADED.
+    assert(pSM->getCurrState() == UNLOADED);
+
+    std::cout << "Transition from UNLOADED to LOADED:" << std::endl;
     pSM->step();
     pSM->setIsUnloaded(false); //This simulates the GUI setting the state to loaded (i.e. no longer unloaded).
-    std::cout << pSM->getCurrState() << std::endl;
     assert(pSM->getCurrState() == LOADED);
+
+    std::cout << "Transition from LOADED to SAFE_TO_APPROACH:" << std::endl;
     pSM->step();
-    std::cout << pSM->getCurrState() << std::endl;
-    //assert(pSM->getCurrState() == SAFE_TO_APPROACH);
+    assert(pSM->getCurrState() == SAFE_TO_APPROACH);
     assert(pSM->getLocalizationEngagement());
+
+    std::cout << "Transition from SAFE_TO_APPROACH to READY_TO_LAUNCH:" << std::endl;
+    pSM->step();
+    assert(pSM->getCurrState() == READY_TO_LAUNCH);
+
 }
 
 int main(int, char**) {

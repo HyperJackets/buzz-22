@@ -55,7 +55,7 @@ bool CStateMachine::hasMoved(void) const
 
 bool CStateMachine::temperatureCheck(void) const
 {
-	this->getBatteryTemp() < THRESHOLD && this->getMotorTemp() < THRESHOLD;
+	return this->getBatteryTemp() < THRESHOLD && this->getMotorTemp() < THRESHOLD;
 }
 
 bool CStateMachine::readyToLaunch(void) const
@@ -91,11 +91,11 @@ void CStateMachine::step(void)
 	else if (this->getCurrState() == LOADED && !this->isMoving() && !this->hasMoved())
 	{
 		this->updateState(SAFE_TO_APPROACH);
+		this->setLocalizationEngagement(true);
 	} 
 	else if (this->getCurrState() == SAFE_TO_APPROACH && !this->isMoving())
 	{
 		this->updateState(READY_TO_LAUNCH);
-		this->setLocalizationEngagement(true);
 		//...
 	}
 	else if (this->getCurrState() == READY_TO_LAUNCH && this->isReadyToLaunch())
