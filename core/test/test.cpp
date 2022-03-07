@@ -46,9 +46,16 @@ void testAllGood()
     assert(pSM->getCurrState() == LAUNCHING);
     assert(pSM->getMotorEngagement());
 
+    pSM->setVelocity(15);
+    pSM->setAccel(3);
+    pSM->setCurrentDist(100);
+
     std::cout << "Transition from LAUNCHING to BREAKING:" << std::endl;
     pSM->step();
+    assert(pSM->getBreakEngagement());
+    assert(!pSM->getMotorEngagement());
 
+    std::cout << "Transition from BREAKING to CRAWLING:" << std::endl; 
 }
 
 int main(int, char**) {

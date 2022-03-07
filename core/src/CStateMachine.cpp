@@ -105,7 +105,7 @@ void CStateMachine::step(void)
 		//Manually set state to launching via manual GUI control.
 		//...
 	}
-	else if (this->getCurrState() == LAUNCHING && (this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST) && this->isHealthy() && this->temperatureCheck())
+	else if (this->getCurrState() == LAUNCHING && (this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST))
 	{
 		this->updateState(BREAKING);
 		this->setBreakEngagement(true);

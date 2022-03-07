@@ -70,6 +70,13 @@ public:
 	bool launching(void) const;
 	bool breaking(void) const;
 
+	//These are methods that will be used in the test. However when we integrate with hardware the hardware will monitor and calculate the data.
+	void setVelocity(double fVelocity) {this->m_fVelocity = fVelocity;}
+	void setAccel(double fAccel) {this->m_fAccel = fAccel;}
+	void setBatteryTemp(double fBatteryTemp) {this->m_fBatteryTemp = fBatteryTemp;}
+	void setMotorTemp(double fMotorTemp) {this->m_fMotorTemp = fMotorTemp;}
+	void setCurrentDist(double fCurrentDist) {this->m_fCurrentDist = fCurrentDist;}
+
 	//other methods
 	void handleFault(void);
 	void updateState(State newState) { this->m_currState = newState; }
