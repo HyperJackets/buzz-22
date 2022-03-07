@@ -34,7 +34,6 @@ void testAllGood()
 
     std::cout << "Transition from LOADED to SAFE_TO_APPROACH:" << std::endl;
     pSM->step();
-    assert(pSM->getCurrState() == SAFE_TO_APPROACH);
     assert(pSM->getLocalizationEngagement());
 
     std::cout << "Transition from SAFE_TO_APPROACH to READY_TO_LAUNCH:" << std::endl;
@@ -45,7 +44,6 @@ void testAllGood()
     pSM->step();
     pSM->setIsReadyToLaunch(true); //This simulates the GUI setting the state to ready to launch.
     assert(pSM->getCurrState() == LAUNCHING);
-    std::cout << pSM->getCurrState() << std::endl;
     assert(pSM->getMotorEngagement());
 
     std::cout << "Transition from LAUNCHING to BREAKING:" << std::endl;

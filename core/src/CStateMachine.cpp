@@ -98,7 +98,7 @@ void CStateMachine::step(void)
 		this->updateState(READY_TO_LAUNCH);
 		//...
 	}
-	else if (this->getCurrState() == READY_TO_LAUNCH && this->isReadyToLaunch())
+	else if (this->getCurrState() == READY_TO_LAUNCH && !this->isReadyToLaunch())
 	{
 		this->updateState(LAUNCHING);
 		this->setMotorEngagement(true);
