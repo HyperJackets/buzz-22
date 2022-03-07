@@ -41,6 +41,13 @@ void testAllGood()
     pSM->step();
     assert(pSM->getCurrState() == READY_TO_LAUNCH);
 
+    std::cout << "Transition from READY_TO_LAUNCH to LAUNCHING:" << std::endl;
+    pSM->step();
+    pSM->setIsReadyToLaunch(true); //This simulates the GUI setting the state to ready to launch.
+    //assert(pSM->getCurrState() == LAUNCHING);
+    std::cout << pSM->getCurrState() << std::endl;
+    assert(pSM->getMotorEngagement());
+
 }
 
 int main(int, char**) {
