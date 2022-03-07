@@ -20,19 +20,32 @@ void initialCheck(CStateMachine* pSM)
     assert(pSM->getBMSEngagement());
     assert(pSM->getCommunicationsEngagement());
     assert(pSM->getCurrState() == UNLOADED);
+}
 
-    //check other conditions
+void testAllGood()
+{
+    CStateMachine* pSM = new CStateMachine();
+    //Transition from UNLOADED to LOADED.
+    pSM->step();
+    pSM->setIsUnloaded(false); //This simulates the GUI setting the state to loaded (i.e. no longer unloaded).
+    std::cout << pSM->getCurrState() << std::endl;
+    assert(pSM->getCurrState() == LOADED);
+    pSM->step();
+    std::cout << pSM->getCurrState() << std::endl;
+    //assert(pSM->getCurrState() == SAFE_TO_APPROACH);
+    assert(pSM->getLocalizationEngagement());
 }
 
 int main(int, char**) {
     std::cout << "----------Testing State Machine----------" << std::endl;
 
-    CStateMachine* mySM1 = new CStateMachine();
-    //NOTE: Instead of printing, I should use asserts to check if conditions are what we expect.
-    initialCheck(mySM1);
+    // CStateMachine* mySM1 = new CStateMachine();
+    // //NOTE: Instead of printing, I should use asserts to check if conditions are what we expect.
+    // initialCheck(mySM1);
     std::cout << "Going through control system" << std::endl;
 
     //Step once, and make sure that all variables are what we EXPECT to see. Also change boolean GUI variables and numerical data.
+    testAllGood();
 
     std::cout << "----------Done testing----------" << std::endl;
 }

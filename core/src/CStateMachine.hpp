@@ -56,6 +56,10 @@ public:
 	void setBMSEngagement(bool bBMS) {this->m_bBMS = bBMS;}
 	void setCommunicationsEngagement(bool bCommunications) {this->m_bCommunications = bCommunications;}
 
+	//set methods for GUI 
+	void setIsUnloaded(bool bIsUnloaded) {this->m_bIsUnloaded = bIsUnloaded;}
+	void setIsReadyToLaunch(bool bIsReadyToLaunch) {this->m_bIsReadyToLaunch = bIsReadyToLaunch;}
+
 	//condition checks
 	bool hasFinishedTrack(void) const;
 	bool isHealthy(void) const;
