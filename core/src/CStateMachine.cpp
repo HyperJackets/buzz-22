@@ -76,6 +76,7 @@ bool CStateMachine::breaking(void) const
 //This method goes through the various stages of the control system. 
 void CStateMachine::step(void)
 {
+	//fault condition
 	if (!this->isHealthy() || !this->temperatureCheck() || this->hasFinishedTrack())
 	{
 		this->updateState(FAULT);
