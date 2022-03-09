@@ -63,16 +63,90 @@ void testAllGood()
     assert(pSM->getMotorEngagement());
 }
 
+void testHealthFault()
+{
+    CStateMachine* pSM = new CStateMachine();
+    assert(pSM->getCurrState() == UNLOADED);
+
+    std::cout << "Transition from UNLOADED to LOADED:" << std::endl;
+    pSM->step();
+    pSM->setIsUnloaded(false); //This simulates the GUI setting the state to loaded (i.e. no longer unloaded).
+    assert(pSM->getCurrState() == LOADED);
+
+    std::cout << "Transition from LOADED to SAFE_TO_APPROACH:" << std::endl;
+    pSM->step();
+    assert(pSM->getLocalizationEngagement());
+
+    std::cout << "Transition from SAFE_TO_APPROACH to READY_TO_LAUNCH:" << std::endl;
+    pSM->step();
+    assert(pSM->getCurrState() == READY_TO_LAUNCH);
+
+    std::cout << "Transition from READY_TO_LAUNCH to LAUNCHING:" << std::endl;
+    pSM->step();
+    pSM->setIsReadyToLaunch(true); //This simulates the GUI setting the state to ready to launch.
+    assert(pSM->getCurrState() == LAUNCHING);
+    assert(pSM->getMotorEngagement());
+
+    pSM->setVelocity(15);
+    pSM->setAccel(3);
+    pSM->setCurrentDist(60);
+    pSM->setHealth(false);
+    assert(!pSM->isHealthy());
+    pSM->step();
+    assert(pSM->getCurrState() == FAULT);
+    assert(pSM->getBreakEngagement());
+    assert(!pSM->getMotorEngagement());
+    assert(pSM->getLocalizationEngagement());
+    assert(pSM->getBMSEngagement());
+    assert(pSM->getCommunicationsEngagement());
+}
+
+void testTempFault()
+{
+    CStateMachine* pSM = new CStateMachine();
+    assert(pSM->getCurrState() == UNLOADED);
+
+    std::cout << "Transition from UNLOADED to LOADED:" << std::endl;
+    pSM->step();
+    pSM->setIsUnloaded(false); //This simulates the GUI setting the state to loaded (i.e. no longer unloaded).
+    assert(pSM->getCurrState() == LOADED);
+
+    std::cout << "Transition from LOADED to SAFE_TO_APPROACH:" << std::endl;
+    pSM->step();
+    assert(pSM->getLocalizationEngagement());
+
+    std::cout << "Transition from SAFE_TO_APPROACH to READY_TO_LAUNCH:" << std::endl;
+    pSM->step();
+    assert(pSM->getCurrState() == READY_TO_LAUNCH);
+
+    pSM->setBatteryTemp(103);
+    assert(!pSM->temperatureCheck());
+    pSM->step();
+    assert(pSM->getCurrState() == FAULT);
+    assert(pSM->getBreakEngagement());
+    assert(!pSM->getMotorEngagement());
+    assert(pSM->getLocalizationEngagement());
+    assert(pSM->getBMSEngagement());
+    assert(pSM->getCommunicationsEngagement());
+}
+
 int main(int, char**) {
-    std::cout << "----------Testing State Machine----------" << std::endl;
+    std::cout << "----------Testing State Machine----------" << std::endl << std::endl;
 
-    // CStateMachine* mySM1 = new CStateMachine();
-    // //NOTE: Instead of printing, I should use asserts to check if conditions are what we expect.
-    // initialCheck(mySM1);
-    std::cout << "Going through control system" << std::endl;
+    //NOTE: Instead of printing, I should use asserts to check if conditions are what we expect.
 
-    //Step once, and make sure that all variables are what we EXPECT to see. Also change boolean GUI variables and numerical data.
+    //Step once, and make sure that all variables are what we EXPECT to see. Also manually change boolean GUI variables and numerical data.
+    std::cout << "------Testing all good case------" << std::endl;
     testAllGood();
+    std::cout << "------Done testing all good case------" << std::endl << std::endl;
+
+    std::cout << "------Testing health fault case------" << std::endl;
+    testHealthFault();
+    std::cout << "------Done testing health fault case------" << std::endl << std::endl;
+
+    std::cout << "------Testing temp fault case------" << std::endl;
+    testTempFault();
+    std::cout << "------Done testing temp fault case------" << std::endl << std::endl;
 
     std::cout << "----------Done testing----------" << std::endl;
 }

@@ -76,6 +76,8 @@ public:
 	void setBatteryTemp(double fBatteryTemp) {this->m_fBatteryTemp = fBatteryTemp;}
 	void setMotorTemp(double fMotorTemp) {this->m_fMotorTemp = fMotorTemp;}
 	void setCurrentDist(double fCurrentDist) {this->m_fCurrentDist = fCurrentDist;}
+	void setHealth(bool bHealth) {this->m_bHealth = bHealth;}
+	void setLocalizationHealth(bool bLocalizationHealth) {this->m_bLocalizationHealth = bLocalizationHealth;}
 
 	//other methods
 	void handleFault(void);
