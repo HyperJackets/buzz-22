@@ -17,14 +17,15 @@ private:
 	//Note that m_ in front of a variable name means that it is a member variable, and f means that it's a float (decimal), and b means that it's a boolean.
 	double m_fVelocity, m_fAccel, m_fBatteryTemp, m_fMotorTemp, m_fCurrentDist;
 	bool m_bHealth, m_bLocalizationHealth;
-	bool m_bBreak, m_bMotor, m_bLocalization, m_bBMS, m_bCommunications; //These variables denote if the interface is engaged or not.
+	//The following variables denote if the interface is engaged or not. Also make sure that VD and structures know that braking and propulsion can never be simultaneously powered.
+	bool m_bBreak, m_bMotor, m_bLocalization, m_bBMS, m_bCommunications;  
 	State m_currState;
-	//These variables are changed when a GUI is pressed on the dashboard.
+	//The following variables are changed when a GUI is pressed on the dashboard.
 	bool m_bIsUnloaded = true;
 	bool m_bIsReadyToLaunch = false; 
 
 	//constants
-	static const int THRESHOLD = 100, EXCEEDED_DIST = 100, TRACK_DIST = 100, BREAK_DIST = 60;
+	static const int THRESHOLD = 100, EXCEEDED_DIST = 100, TRACK_DIST = 120, BREAK_DIST = 60;
 
 public:
 	//constructor
