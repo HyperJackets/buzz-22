@@ -25,7 +25,7 @@ private:
 	bool m_bIsReadyToLaunch = false; 
 
 	//constants
-	static const int THRESHOLD = 100, EXCEEDED_DIST = 100, TRACK_DIST = 120, BREAK_DIST = 60;
+	static const int THRESHOLD = 100, EXCEEDED_DIST = 170, TRACK_DIST = 150, BREAK_DIST = 70;
 
 public:
 	//constructor

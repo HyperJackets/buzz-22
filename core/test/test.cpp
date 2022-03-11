@@ -138,7 +138,7 @@ void testAllGood()
 
     pSM->setVelocity(15);
     pSM->setAccel(3);
-    pSM->setCurrentDist(60);
+    pSM->setCurrentDist(70);
 
     std::cout << "Transition from LAUNCHING to BREAKING:" << std::endl;
     pSM->step();
@@ -194,30 +194,25 @@ void testTempFault()
     std::cout << "------Testing temp fault case------" << std::endl;
 
     CStateMachine* pSM = new CStateMachine();
-    assert(pSM->getCurrState() == UNLOADED);
+    assertUnloaded(pSM);
 
     std::cout << "Transition from UNLOADED to LOADED:" << std::endl;
     pSM->step();
     pSM->setIsUnloaded(false); //This simulates the GUI setting the state to loaded (i.e. no longer unloaded).
-    assert(pSM->getCurrState() == LOADED);
+    assertLoaded(pSM);
 
     std::cout << "Transition from LOADED to SAFE_TO_APPROACH:" << std::endl;
     pSM->step();
-    assert(pSM->getLocalizationEngagement());
+    assertSafeToApproach(pSM);
 
     std::cout << "Transition from SAFE_TO_APPROACH to READY_TO_LAUNCH:" << std::endl;
     pSM->step();
-    assert(pSM->getCurrState() == READY_TO_LAUNCH);
+    assertReadyToLaunch(pSM);
 
     pSM->setBatteryTemp(103);
     assert(!pSM->temperatureCheck());
     pSM->step();
-    assert(pSM->getCurrState() == FAULT);
-    assert(pSM->getBreakEngagement());
-    assert(!pSM->getMotorEngagement());
-    assert(pSM->getLocalizationEngagement());
-    assert(pSM->getBMSEngagement());
-    assert(pSM->getCommunicationsEngagement());
+    assertFault(pSM);
 
     std::cout << "------Done testing temp fault case------" << std::endl << std::endl;
 }
@@ -228,37 +223,31 @@ void testDistFault()
     std::cout << "------Testing distance fault case------" << std::endl;
 
     CStateMachine* pSM = new CStateMachine();
-    assert(pSM->getCurrState() == UNLOADED);
+    assertUnloaded(pSM);
 
     std::cout << "Transition from UNLOADED to LOADED:" << std::endl;
     pSM->step();
     pSM->setIsUnloaded(false); //This simulates the GUI setting the state to loaded (i.e. no longer unloaded).
-    assert(pSM->getCurrState() == LOADED);
+    assertLoaded(pSM);
 
     std::cout << "Transition from LOADED to SAFE_TO_APPROACH:" << std::endl;
     pSM->step();
-    assert(pSM->getLocalizationEngagement());
+    assertSafeToApproach(pSM);
 
     std::cout << "Transition from SAFE_TO_APPROACH to READY_TO_LAUNCH:" << std::endl;
     pSM->step();
-    assert(pSM->getCurrState() == READY_TO_LAUNCH);
+    assertReadyToLaunch(pSM);
 
     std::cout << "Transition from READY_TO_LAUNCH to LAUNCHING:" << std::endl;
     pSM->step();
     pSM->setIsReadyToLaunch(true); //This simulates the GUI setting the state to ready to launch.
-    assert(pSM->getCurrState() == LAUNCHING);
-    assert(pSM->getMotorEngagement());
+    assertLaunching(pSM);
 
     pSM->setVelocity(15);
     pSM->setAccel(3);
-    pSM->setCurrentDist(120);
+    pSM->setCurrentDist(175);
     pSM->step();
-    assert(pSM->getCurrState() == FAULT);
-    assert(pSM->getBreakEngagement());
-    assert(!pSM->getMotorEngagement());
-    assert(pSM->getLocalizationEngagement());
-    assert(pSM->getBMSEngagement());
-    assert(pSM->getCommunicationsEngagement());
+    assertFault(pSM);
 
     std::cout << "------Done testing distance fault case------" << std::endl << std::endl;
 }
@@ -269,20 +258,20 @@ void testTransitionFromLoadedToCrawling()
     std::cout << "------Testing transition from LOADED to CRAWLING case------" << std::endl;
 
     CStateMachine* pSM = new CStateMachine();
-    assert(pSM->getCurrState() == UNLOADED);
+    assertUnloaded(pSM);
 
     std::cout << "Transition from UNLOADED to LOADED:" << std::endl;
     pSM->step();
     pSM->setIsUnloaded(false); //This simulates the GUI setting the state to loaded (i.e. no longer unloaded).
-    assert(pSM->getCurrState() == LOADED);
+    assertLoaded(pSM);
 
-    pSM->setCurrentDist(108);
+    pSM->setCurrentDist(151);
     std::cout << "Transition from LOADED to CRAWLING:" << std::endl;
     pSM->step();
-    assert(pSM->getCurrState() == CRAWLING);
-    assert(!pSM->getBreakEngagement());
-    assert(pSM->getMotorEngagement());
+    assertCrawling(pSM);
 }
+
+
 
 int main(int, char**) {
     std::cout << "----------Testing State Machine----------" << std::endl << std::endl;
@@ -294,6 +283,7 @@ int main(int, char**) {
     testHealthFault();
     testTempFault();
     testDistFault();
+    testTransitionFromLoadedToCrawling();
 
     std::cout << "----------Done testing----------" << std::endl;
 }

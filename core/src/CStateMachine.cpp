@@ -89,10 +89,19 @@ void CStateMachine::step(void)
 		//Manually set state to loaded via manual GUI control.
 		//...
 	}
-	else if (this->getCurrState() == LOADED && !this->isMoving() && !this->hasMoved())
+	else if (this->getCurrState() == LOADED)
 	{
-		this->updateState(SAFE_TO_APPROACH);
-		this->setLocalizationEngagement(true);
+		if (this->isMoving() || this->hasMoved())
+		{
+			this->updateState(CRAWLING);
+			this->setMotorEngagement(true);
+			this->setLocalizationEngagement(true);
+		}
+		else
+		{
+			this->updateState(SAFE_TO_APPROACH);
+			this->setLocalizationEngagement(true);
+		}		
 	} 
 	else if (this->getCurrState() == SAFE_TO_APPROACH && !this->isMoving())
 	{
