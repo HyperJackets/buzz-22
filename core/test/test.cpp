@@ -269,9 +269,29 @@ void testTransitionFromLoadedToCrawling()
     std::cout << "Transition from LOADED to CRAWLING:" << std::endl;
     pSM->step();
     assertCrawling(pSM);
+
+    std::cout << "------Done testing transition from LOADED to CRAWLING case------" << std::endl << std::endl;
 }
 
+//This method simulates the pod transitioning from LOADED to BREAKING.
+void testTransitionFromLoadedToBreaking()
+{
+    std::cout << "------Done transition from LOADED to BREAKING case------" << std::endl;
+    CStateMachine* pSM = new CStateMachine();
+    assertUnloaded(pSM);
 
+    std::cout << "Transition from UNLOADED to LOADED:" << std::endl;
+    pSM->step();
+    pSM->setIsUnloaded(false); //This simulates the GUI setting the state to loaded (i.e. no longer unloaded).
+    assertLoaded(pSM);
+
+    pSM->setCurrentDist(150);
+    std::cout << "Transition from LOADED to BREAKING:" << std::endl;
+    pSM->step();
+    assertBreaking(pSM);
+
+    std::cout << "------Done testing transition from LOADED to BREAKING case------" << std::endl << std::endl;
+}
 
 int main(int, char**) {
     std::cout << "----------Testing State Machine----------" << std::endl << std::endl;
@@ -284,6 +304,7 @@ int main(int, char**) {
     testTempFault();
     testDistFault();
     testTransitionFromLoadedToCrawling();
-
+    testTransitionFromLoadedToBreaking();
+    
     std::cout << "----------Done testing----------" << std::endl;
 }

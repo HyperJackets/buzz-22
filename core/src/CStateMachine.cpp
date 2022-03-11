@@ -91,10 +91,16 @@ void CStateMachine::step(void)
 	}
 	else if (this->getCurrState() == LOADED)
 	{
-		if (this->isMoving() || this->hasMoved())
+		if (this->getCurrentDist() > TRACK_DIST)
 		{
 			this->updateState(CRAWLING);
 			this->setMotorEngagement(true);
+			this->setLocalizationEngagement(true);
+		}
+		else if (this->getCurrentDist() == TRACK_DIST)
+		{
+			this->updateState(BREAKING);
+			this->setBreakEngagement(true);
 			this->setLocalizationEngagement(true);
 		}
 		else
