@@ -1,4 +1,4 @@
-#include "C:\SEAN\HyperJackets\buzz-22\core\src\CStateMachine.hpp"
+#include "../src/CStateMachine.hpp"
 #include <iostream>
 #include <cassert>
 
@@ -305,6 +305,6 @@ int main(int, char**) {
     testDistFault();
     testTransitionFromLoadedToCrawling();
     testTransitionFromLoadedToBreaking();
-    
+
     std::cout << "----------Done testing----------" << std::endl;
 }

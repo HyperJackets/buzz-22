@@ -4,3 +4,5 @@ out
 .DS_Store
 build/*
 build/
+.vscode
+.vscode/*
