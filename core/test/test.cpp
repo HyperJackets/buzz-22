@@ -1,4 +1,4 @@
-#include "../src/CStateMachine.hpp"
+#include "../src/CPod.hpp"
 #include <iostream>
 #include <cassert>
 
