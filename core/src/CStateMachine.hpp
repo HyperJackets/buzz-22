@@ -18,7 +18,7 @@ private:
 	double m_fVelocity, m_fAccel, m_fBatteryTemp, m_fMotorTemp, m_fCurrentDist;
 	bool m_bHealth, m_bLocalizationHealth;
 	//The following variables denote if the interface is engaged or not. Also make sure that VD and structures know that braking and propulsion can never be simultaneously powered.
-	bool m_bBreak, m_bMotor, m_bLocalization, m_bBMS, m_bCommunications;  
+	bool m_bBrake, m_bMotor, m_bLocalization, m_bBMS, m_bCommunications;  
 	State m_currState;
 	//The following variables are changed when a GUI is pressed on the dashboard.
 	bool m_bIsUnloaded = true;
@@ -41,7 +41,7 @@ public:
 	double getCurrentDist(void) const { return this->m_fCurrentDist; }
 	bool getHealth(void) const { return this->m_bHealth; }
 	bool getLocalizationHealth(void) const { return this->m_bLocalizationHealth; }
-	bool getBreakEngagement(void) const { return this->m_bBreak; }
+	bool getBrakeEngagement(void) const { return this->m_bBrake; }
 	bool getMotorEngagement(void) const { return this->m_bMotor; }
 	bool getLocalizationEngagement(void) const { return this->m_bLocalization; }
 	bool getBMSEngagement(void) const { return this->m_bBMS; }
@@ -53,7 +53,7 @@ public:
 	//set methods for engagement
 	void setLocalizationEngagement(bool bLocalization) {this->m_bLocalization = bLocalization;}
 	void setMotorEngagement(bool bMotor) {this->m_bMotor = bMotor;}
-	void setBreakEngagement(bool bBreak) {this->m_bBreak = bBreak;}
+	void setBrakeEngagement(bool bBrake) {this->m_bBrake = bBrake;}
 	void setBMSEngagement(bool bBMS) {this->m_bBMS = bBMS;}
 	void setCommunicationsEngagement(bool bCommunications) {this->m_bCommunications = bCommunications;}
 
@@ -69,7 +69,7 @@ public:
 	bool temperatureCheck(void) const;
 	bool readyToLaunch(void) const;
 	bool launching(void) const;
-	bool breaking(void) const;
+	bool braking(void) const;
 
 	//These are methods that will be used in the test. However when we integrate with hardware the hardware will monitor and calculate the data.
 	void setVelocity(double fVelocity) {this->m_fVelocity = fVelocity;}

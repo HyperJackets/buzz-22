@@ -14,7 +14,7 @@ void initialCheck(CStateMachine* pSM)
     //check states and engagements
     assert(pSM->getHealth());
     assert(pSM->getLocalizationHealth());
-    assert(!pSM->getBreakEngagement());
+    assert(!pSM->getBrakeEngagement());
     assert(!pSM->getMotorEngagement());
     assert(!pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());
@@ -26,7 +26,7 @@ void initialCheck(CStateMachine* pSM)
 void assertUnloaded(CStateMachine* pSM)
 {
     assert(pSM->getCurrState() == UNLOADED);
-    assert(!pSM->getBreakEngagement());
+    assert(!pSM->getBrakeEngagement());
     assert(!pSM->getMotorEngagement());
     assert(!pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());
@@ -37,7 +37,7 @@ void assertUnloaded(CStateMachine* pSM)
 void assertLoaded(CStateMachine* pSM)
 {
     assert(pSM->getCurrState() == LOADED);
-    assert(!pSM->getBreakEngagement());
+    assert(!pSM->getBrakeEngagement());
     assert(!pSM->getMotorEngagement());
     assert(!pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());
@@ -48,7 +48,7 @@ void assertLoaded(CStateMachine* pSM)
 void assertSafeToApproach(CStateMachine* pSM)
 {
     assert(pSM->getCurrState() == SAFE_TO_APPROACH);
-    assert(!pSM->getBreakEngagement());
+    assert(!pSM->getBrakeEngagement());
     assert(!pSM->getMotorEngagement());
     assert(pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());
@@ -59,7 +59,7 @@ void assertSafeToApproach(CStateMachine* pSM)
 void assertReadyToLaunch(CStateMachine* pSM)
 {
     assert(pSM->getCurrState() == READY_TO_LAUNCH);
-    assert(!pSM->getBreakEngagement());
+    assert(!pSM->getBrakeEngagement());
     assert(!pSM->getMotorEngagement());
     assert(pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());
@@ -70,7 +70,7 @@ void assertReadyToLaunch(CStateMachine* pSM)
 void assertLaunching(CStateMachine* pSM)
 {
     assert(pSM->getCurrState() == LAUNCHING);
-    assert(!pSM->getBreakEngagement());
+    assert(!pSM->getBrakeEngagement());
     assert(pSM->getMotorEngagement());
     assert(pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());
@@ -81,7 +81,7 @@ void assertLaunching(CStateMachine* pSM)
 void assertBreaking(CStateMachine* pSM)
 {
     assert(pSM->getCurrState() == BREAKING);
-    assert(pSM->getBreakEngagement());
+    assert(pSM->getBrakeEngagement());
     assert(!pSM->getMotorEngagement());
     assert(pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());
@@ -92,7 +92,7 @@ void assertBreaking(CStateMachine* pSM)
 void assertCrawling(CStateMachine* pSM)
 {
     assert(pSM->getCurrState() == CRAWLING);
-    assert(!pSM->getBreakEngagement());
+    assert(!pSM->getBrakeEngagement());
     assert(pSM->getMotorEngagement());
     assert(pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());
@@ -103,7 +103,7 @@ void assertCrawling(CStateMachine* pSM)
 void assertFault(CStateMachine* pSM)
 {
     assert(pSM->getCurrState() == FAULT);
-    assert(pSM->getBreakEngagement());
+    assert(pSM->getBrakeEngagement());
     assert(!pSM->getMotorEngagement());
     assert(pSM->getLocalizationEngagement());
     assert(pSM->getBMSEngagement());

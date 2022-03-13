@@ -8,16 +8,18 @@
 class CPod
 {
 private:
-    CStateMachine* m_pStateMachine;
+    CStateMachine* m_pStateMachine = new CStateMachine();
 
 public:
     //get methods
     CStateMachine* getStateMachine(void) {return this->m_pStateMachine;}
 
-    //methods
+    //These methods control hardware.
     void load(void);
     void launch(void);
     void brake(void);
     void crawl(void);
+
+    void step(void); //checks its state machine's state, and calls one of the 4 methods as appropriate
 };
 #endif

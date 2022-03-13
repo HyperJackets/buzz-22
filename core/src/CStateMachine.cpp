@@ -15,7 +15,7 @@ CStateMachine::CStateMachine()
 	//initialize states and engagements
 	this->m_bHealth = true;
 	this->m_bLocalizationHealth = true;
-	this->m_bBreak = false;
+	this->m_bBrake = false;
 	this->m_bMotor = false;
 	this->m_bLocalization = false;
 	this->m_bBMS = true;
@@ -26,7 +26,7 @@ CStateMachine::CStateMachine()
 //condition checks
 void CStateMachine::handleFault(void) 
 {
-	this->setBreakEngagement(true);
+	this->setBrakeEngagement(true);
 	this->setMotorEngagement(false);
 	this->setLocalizationEngagement(true);
 	this->setBMSEngagement(true);
@@ -60,17 +60,17 @@ bool CStateMachine::temperatureCheck(void) const
 
 bool CStateMachine::readyToLaunch(void) const
 {
-	return !this->getBreakEngagement() && !this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
+	return !this->getBrakeEngagement() && !this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
 }
 
 bool CStateMachine::launching(void) const
 {
-	return !this->getBreakEngagement() && this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
+	return !this->getBrakeEngagement() && this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
 }
 
-bool CStateMachine::breaking(void) const
+bool CStateMachine::braking(void) const
 {
-	return this->getBreakEngagement() && !this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
+	return this->getBrakeEngagement() && !this->getMotorEngagement() && this->getLocalizationEngagement() && this->getBMSEngagement() && this->getCommunicationsEngagement();
 }
 
 //This method goes through the various stages of the control system. 
@@ -100,7 +100,7 @@ void CStateMachine::step(void)
 		else if (this->getCurrentDist() == TRACK_DIST)
 		{
 			this->updateState(BREAKING);
-			this->setBreakEngagement(true);
+			this->setBrakeEngagement(true);
 			this->setLocalizationEngagement(true);
 		}
 		else
@@ -124,14 +124,14 @@ void CStateMachine::step(void)
 	else if (this->getCurrState() == LAUNCHING && (this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST))
 	{
 		this->updateState(BREAKING);
-		this->setBreakEngagement(true);
+		this->setBrakeEngagement(true);
 		this->setMotorEngagement(false);
 		//...
 	}
 	else if (this->getCurrState() == BREAKING && this->getCurrentDist() < TRACK_DIST)
 	{
 		this->updateState(CRAWLING);
-		this->setBreakEngagement(false);
+		this->setBrakeEngagement(false);
 		this->setMotorEngagement(true);
 		//...
 		return;
