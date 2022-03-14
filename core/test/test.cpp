@@ -78,9 +78,9 @@ void assertLaunching(CStateMachine* pSM)
 }
 
 //This method asserts that the pod's current state is BREAKING.
-void assertBreaking(CStateMachine* pSM)
+void assertBraking(CStateMachine* pSM)
 {
-    assert(pSM->getCurrState() == BREAKING);
+    assert(pSM->getCurrState() == BRAKING);
     assert(pSM->getBrakeEngagement());
     assert(!pSM->getMotorEngagement());
     assert(pSM->getLocalizationEngagement());
@@ -140,11 +140,11 @@ void testAllGood()
     pSM->setAccel(3);
     pSM->setCurrentDist(70);
 
-    std::cout << "Transition from LAUNCHING to BREAKING:" << std::endl;
+    std::cout << "Transition from LAUNCHING to BRAKING:" << std::endl;
     pSM->step();
-    assertBreaking(pSM);
+    assertBraking(pSM);
 
-    std::cout << "Transition from BREAKING to CRAWLING:" << std::endl; 
+    std::cout << "Transition from BRAKING to CRAWLING:" << std::endl; 
     pSM->step();
     assertCrawling(pSM);
 
@@ -274,7 +274,7 @@ void testTransitionFromLoadedToCrawling()
 }
 
 //This method simulates the pod transitioning from LOADED to BREAKING.
-void testTransitionFromLoadedToBreaking()
+void testTransitionFromLoadedToBraking()
 {
     std::cout << "------Done transition from LOADED to BREAKING case------" << std::endl;
     CStateMachine* pSM = new CStateMachine();
@@ -286,11 +286,11 @@ void testTransitionFromLoadedToBreaking()
     assertLoaded(pSM);
 
     pSM->setCurrentDist(150);
-    std::cout << "Transition from LOADED to BREAKING:" << std::endl;
+    std::cout << "Transition from LOADED to BRAKING:" << std::endl;
     pSM->step();
-    assertBreaking(pSM);
+    assertBraking(pSM);
 
-    std::cout << "------Done testing transition from LOADED to BREAKING case------" << std::endl << std::endl;
+    std::cout << "------Done testing transition from LOADED to BRAKING case------" << std::endl << std::endl;
 }
 
 int main(int, char**) {
@@ -304,7 +304,7 @@ int main(int, char**) {
     testTempFault();
     testDistFault();
     testTransitionFromLoadedToCrawling();
-    testTransitionFromLoadedToBreaking();
+    testTransitionFromLoadedToBraking();
 
-    std::cout << "----------Done testing----------" << std::endl;
+    std::cout << "----------Done testing State Machine----------" << std::endl;
 }

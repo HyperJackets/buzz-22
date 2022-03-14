@@ -99,7 +99,7 @@ void CStateMachine::step(void)
 		}
 		else if (this->getCurrentDist() == TRACK_DIST)
 		{
-			this->updateState(BREAKING);
+			this->updateState(BRAKING);
 			this->setBrakeEngagement(true);
 			this->setLocalizationEngagement(true);
 		}
@@ -123,12 +123,12 @@ void CStateMachine::step(void)
 	}
 	else if (this->getCurrState() == LAUNCHING && (this->getCurrentDist() >= BREAK_DIST || this->getCurrentDist() == TRACK_DIST))
 	{
-		this->updateState(BREAKING);
+		this->updateState(BRAKING);
 		this->setBrakeEngagement(true);
 		this->setMotorEngagement(false);
 		//...
 	}
-	else if (this->getCurrState() == BREAKING && this->getCurrentDist() < TRACK_DIST)
+	else if (this->getCurrState() == BRAKING && this->getCurrentDist() < TRACK_DIST)
 	{
 		this->updateState(CRAWLING);
 		this->setBrakeEngagement(false);
