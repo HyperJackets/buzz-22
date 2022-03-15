@@ -295,20 +295,27 @@ void testTransitionFromLoadedToBraking()
 
 void testStateMachine()
 {
+    std::cout << "----------Testing State Machine----------" << std::endl << std::endl;
     testAllGood();
     testHealthFault();
     testTempFault();
     testDistFault();
     testTransitionFromLoadedToCrawling();
     testTransitionFromLoadedToBraking();
+    std::cout << "----------Done testing State Machine----------" << std::endl << std::endl;
 }
 
-int main(int, char**) {
-    std::cout << "----------Testing State Machine----------" << std::endl << std::endl;
-    testStateMachine();
-    std::cout << "----------Done testing State Machine----------" << std::endl << std::endl;
-
+void testPod()
+{
     std::cout << "----------Testing Pod----------" << std::endl << std::endl;
-
+    CPod* pPod = new CPod();
+    assertUnloaded(pPod->getStateMachine());
     std::cout << "----------Done testing Pod----------" << std::endl;
+}
+
+
+int main(int, char**) {
+    
+    testStateMachine();
+    testPod();
 }
