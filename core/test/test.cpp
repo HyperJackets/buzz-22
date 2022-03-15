@@ -293,18 +293,22 @@ void testTransitionFromLoadedToBraking()
     std::cout << "------Done testing transition from LOADED to BRAKING case------" << std::endl << std::endl;
 }
 
-int main(int, char**) {
-    std::cout << "----------Testing State Machine----------" << std::endl << std::endl;
-
-    //NOTE: Instead of printing, I should use asserts to check if conditions are what we expect.
-
-    //Step once, and make sure that all variables are what we EXPECT to see. Also manually change boolean GUI variables and numerical data.
+void testStateMachine()
+{
     testAllGood();
     testHealthFault();
     testTempFault();
     testDistFault();
     testTransitionFromLoadedToCrawling();
     testTransitionFromLoadedToBraking();
+}
 
-    std::cout << "----------Done testing State Machine----------" << std::endl;
+int main(int, char**) {
+    std::cout << "----------Testing State Machine----------" << std::endl << std::endl;
+    testStateMachine();
+    std::cout << "----------Done testing State Machine----------" << std::endl << std::endl;
+
+    std::cout << "----------Testing Pod----------" << std::endl << std::endl;
+
+    std::cout << "----------Done testing Pod----------" << std::endl;
 }
