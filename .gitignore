@@ -7,3 +7,4 @@ build/
 .vscode
 .vscode/*
 bazel-*
+.cpp_include
