@@ -11,12 +11,3 @@ cc_library(
         "core/CStateMachine.hpp",
     ],
 )
-
-cc_test(
-    name = "CStateMachine_test",
-    srcs = ["core/CStatemachine_test.cpp"],
-    deps = [
-        ":core",
-        "@com_google_googletest//:gtest_main",
-    ],
-)

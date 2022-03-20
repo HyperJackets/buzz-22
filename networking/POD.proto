@@ -1,0 +1,74 @@
+syntax = "proto3";
+package pod_networking;
+
+option go_package = "github.com/HyperJackets/buzz-22/networking/proto";
+
+message PODPacket {
+  enum State {
+    UNLOADED = 0;
+    LOADED = 1;
+    FAULT = 2;
+    SAFE_TO_APPROACH = 3;
+    READY_TO_LAUNCH = 4;
+    LAUNCHING = 5;
+    CRAWLING = 6;
+    BRAKING = 7;
+  }
+
+  enum Health {
+    UNHEALTHY = 0; // In fault
+    HEALTHLY = 1;  // Not in fault
+  }
+
+  State state = 1;
+  Health health = 2;
+  double position = 3;
+  double velocity = 4;
+  double acceleration = 5;
+  double battery_temp = 6;
+  double motor_temp = 7;
+
+  repeated Module modules = 8;
+}
+
+// Defines all hardware "modules" and their status
+message Module {
+  enum Status {
+    DISABLED = 0;
+    ENABLED = 1;
+  }
+
+  enum ModuleType {
+    BRAKES = 0;
+    MOTORS = 1;
+    LOCALIZATION = 2;
+    BMS = 3;
+    COMMUNICATIONS = 4;
+  }
+
+  Status status = 1;
+  ModuleType type = 2;
+}
+
+message Ack {
+  enum AckStatus {
+    OK = 0;    // The request or update has been acknowledged and approved
+    FAULT = 1; // The request or update has been determined to FAULT
+  }
+
+  AckStatus status = 1;
+}
+
+service PODTelemetry {
+  // Assumes POD Hosts RPC Server
+  rpc PODPacketRequest(Ack)
+      returns (PODPacket); // Dashboard requests a POD packet
+
+  // Assumes HJ Dashboard Hosts RPC Server
+  rpc FeedPODPacket(PODPacket)
+      returns (Ack); // Give a POD packet to the Dashboard
+
+  // Request transition to LOAD or Launch
+  rpc RequestLoad(Ack) returns (Ack);
+  rpc RequestLaunch(Ack) returns (Ack);
+}
