@@ -4,16 +4,35 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 
 gazelle(name = "gazelle")
 
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
+
 proto_library(
     name = "pod_proto",
     srcs = ["POD.proto"],
 )
 
-load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
-
-cpp_grpc_library(
+cc_proto_library(
     name = "pod_cc_proto",
-    protos = [":pod_proto"],
+    deps = [":pod_proto"],
+)
+
+load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
+
+cc_grpc_library(
+    name = "pod_cc_grpc",
+    srcs = [":pod_proto"],
+    grpc_only = True,
+    deps = [":pod_cc_proto"],
+)
+
+cc_binary(
+    name = "pod_cc_server",
+    srcs = ["server-cc/server.cpp"],
+    defines = ["BAZEL_BUILD"],
+    deps = [
+        ":pod_cc_grpc",
+        "@com_github_grpc_grpc//:grpc++",
+    ],
 )
 
 load("@rules_proto_grpc//go:defs.bzl", "go_grpc_library")
@@ -27,8 +46,8 @@ go_grpc_library(
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 
 go_binary(
-    name = "pod_server",
-    srcs = ["server/server.go"],
+    name = "pod_go_server",
+    srcs = ["server-go/server.go"],
     deps = [
         ":pod_go_proto",
         "@org_golang_google_grpc//:go_default_library",

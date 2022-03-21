@@ -64,6 +64,15 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 gazelle_dependencies()
 
 # CPP GRPC
+##### See https://github.com/grpc/grpc/blob/master/src/cpp/README.md#make
+http_archive(
+    name = "com_github_grpc_grpc",
+    strip_prefix = "grpc-de893acb6aef88484a427e64b96727e4926fdcfd",
+    urls = [
+        "https://github.com/grpc/grpc/archive/de893acb6aef88484a427e64b96727e4926fdcfd.tar.gz",
+    ],
+)
+
 load("@rules_proto_grpc//cpp:repositories.bzl", rules_proto_grpc_cpp_repos = "cpp_repos")
 
 rules_proto_grpc_cpp_repos()
@@ -71,6 +80,10 @@ rules_proto_grpc_cpp_repos()
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
+
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+
+grpc_extra_deps()
 
 # Gazelle
 http_archive(
