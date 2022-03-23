@@ -310,6 +310,7 @@ void testPod()
     std::cout << "----------Testing Pod----------" << std::endl << std::endl;
     CPod* pPod = new CPod();
     assertUnloaded(pPod->getStateMachine());
+    //use sensors to simulate retroreflective tape, accounting for tape sensor counter
     std::cout << "----------Done testing Pod----------" << std::endl;
 }
 
