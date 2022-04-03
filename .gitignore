@@ -4,3 +4,9 @@ out
 .DS_Store
 build/*
 build/
+.vscode
+.vscode/*
+bazel-*
+.ccls
+.ccls-cache/*
+.idea
