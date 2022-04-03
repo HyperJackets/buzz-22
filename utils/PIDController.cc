@@ -6,6 +6,12 @@ void PIDController::setGoal(double target) {
   goal = ::std::max(minInput, ::std::min(maxInput, target));
 }
 
+void PIDController::configGains(double p, double i, double d) {
+  kP = p;
+  kI = i;
+  kD = d;
+}
+
 void PIDController::configInput(double minimumInput, double maximumInput) {
   minInput = minimumInput;
   maxInput = maximumInput;
