@@ -37,7 +37,7 @@ void assertLoaded(CStateMachine *pSM) {
   EXPECT_EQ(pSM->getBrakeEngagement(), false);
   EXPECT_EQ(pSM->getMotorEngagement(), false);
   EXPECT_EQ(pSM->getLocalizationEngagement(), false);
-  EXPECT_EQ(pSM->getBMSEngagement(), false);
+  EXPECT_EQ(pSM->getBMSEngagement(), true);
   EXPECT_EQ(pSM->getCommunicationsEngagement(), true);
 }
 

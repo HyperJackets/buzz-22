@@ -9,3 +9,4 @@ build/
 bazel-*
 .ccls
 .ccls-cache/*
+.idea
