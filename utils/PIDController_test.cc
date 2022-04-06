@@ -33,8 +33,8 @@ TEST(PIDController, calculate) {
   controller.setGoal(1);
   controller.configGains(0.1, 0, 0.001);
   controller.configSaturation(-1, 1);
-  EXPECT_EQ(controller.calculate(0, 0.2), 0.095);
+  EXPECT_NEAR(controller.calculate(0, 0.2), 0.105, 0.0001);
 
   controller.configSaturation(-10, 10);
-  EXPECT_EQ(controller.calculate(0, 0.2), 0.1);
+  EXPECT_NEAR(controller.calculate(0, 0.2), 0.1, 0.0001);
 }

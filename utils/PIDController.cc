@@ -27,7 +27,7 @@ double PIDController::calculate(double current, double dt) {
   double error = goal - current;
   totalError += error;
 
-  double vel = (lastError - error) / dt;
+  double vel = (error - lastError) / dt;
 
   double output = kP * error + kI * totalError + kD * vel;
 
