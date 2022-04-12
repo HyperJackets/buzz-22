@@ -12,11 +12,30 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "utils",
+    srcs = [
+        "utils/PIDController.cc",
+    ],
+    hdrs = [
+        "utils/PIDController.h",
+    ],
+)
+
 cc_test(
     name = "CStateMachine_test",
     srcs = ["core/CStatemachine_test.cpp"],
     deps = [
         ":core",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "controller_test",
+    srcs = ["utils/PIDController_test.cc"],
+    deps = [
+        ":utils",
         "@com_google_googletest//:gtest_main",
     ],
 )
