@@ -1,7 +1,7 @@
-#include "CStateMachine.hpp"
+#include "state_machine.h"
 
 // constructor
-CStateMachine::CStateMachine() {
+StateMachine::StateMachine() {
   // initialize numerical data
   this->m_fVelocity = 0;
   this->m_fAccel = 0;
@@ -22,7 +22,7 @@ CStateMachine::CStateMachine() {
 }
 
 // condition checks
-void CStateMachine::handleFault(void) {
+void StateMachine::handleFault(void) {
   this->setBrakeEngagement(true);
   this->setMotorEngagement(false);
   this->setLocalizationEngagement(true);
@@ -30,44 +30,44 @@ void CStateMachine::handleFault(void) {
   this->setCommunicationsEngagement(true);
 }
 
-bool CStateMachine::hasFinishedTrack(void) const {
+bool StateMachine::hasFinishedTrack(void) const {
   return this->getCurrentDist() > EXCEEDED_DIST;
 }
 
-bool CStateMachine::isHealthy(void) const {
+bool StateMachine::isHealthy(void) const {
   return this->getHealth() && this->getLocalizationHealth();
 }
 
-bool CStateMachine::isMoving(void) const {
+bool StateMachine::isMoving(void) const {
   return this->getVelocity() != 0 || this->getAccel() != 0;
 }
 
-bool CStateMachine::hasMoved(void) const { return this->getCurrentDist() != 0; }
+bool StateMachine::hasMoved(void) const { return this->getCurrentDist() != 0; }
 
-bool CStateMachine::temperatureCheck(void) const {
+bool StateMachine::temperatureCheck(void) const {
   return this->getBatteryTemp() < THRESHOLD && this->getMotorTemp() < THRESHOLD;
 }
 
-bool CStateMachine::readyToLaunch(void) const {
+bool StateMachine::readyToLaunch(void) const {
   return !this->getBrakeEngagement() && !this->getMotorEngagement() &&
          this->getLocalizationEngagement() && this->getBMSEngagement() &&
          this->getCommunicationsEngagement();
 }
 
-bool CStateMachine::launching(void) const {
+bool StateMachine::launching(void) const {
   return !this->getBrakeEngagement() && this->getMotorEngagement() &&
          this->getLocalizationEngagement() && this->getBMSEngagement() &&
          this->getCommunicationsEngagement();
 }
 
-bool CStateMachine::braking(void) const {
+bool StateMachine::braking(void) const {
   return this->getBrakeEngagement() && !this->getMotorEngagement() &&
          this->getLocalizationEngagement() && this->getBMSEngagement() &&
          this->getCommunicationsEngagement();
 }
 
 // This method goes through the various stages of the control system.
-void CStateMachine::step(void) {
+void StateMachine::step(void) {
   // fault condition
   if (!this->isHealthy() || !this->temperatureCheck() ||
       this->hasFinishedTrack()) {
@@ -117,7 +117,7 @@ void CStateMachine::step(void) {
   }
 }
 
-void CStateMachine::goThroughControlSystem(void) {
+void StateMachine::goThroughControlSystem(void) {
   while (this->getCurrState() != FAULT) {
     this->step();
   }

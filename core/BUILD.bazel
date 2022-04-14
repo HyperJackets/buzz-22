@@ -1,0 +1,44 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "core",
+    srcs = [
+        "pod.cc",
+        "state_machine.cc",
+    ],
+    hdrs = [
+        "pod.h",
+        "state_machine.h",
+    ],
+    deps = [
+        "//core/networking:pod_cc_grpc",
+    ],
+)
+
+cc_library(
+    name = "utils",
+    srcs = [
+        "utils/pid_controller.cc",
+    ],
+    hdrs = [
+        "utils/pid_controller.h",
+    ],
+)
+
+cc_test(
+    name = "state_machine_test",
+    srcs = ["state_machine_test.cc"],
+    deps = [
+        ":core",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "pid_controller_test",
+    srcs = ["utils/pid_controller_test.cc"],
+    deps = [
+        ":utils",
+        "@com_google_googletest//:gtest_main",
+    ],
+)

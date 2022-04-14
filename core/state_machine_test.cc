@@ -1,8 +1,8 @@
-#include "CPod.hpp"
+#include "pod.h"
 #include "gtest/gtest.h"
 #include <iostream>
 
-void initialCheck(CStateMachine *pSM) {
+void initialCheck(StateMachine *pSM) {
   // check numerical data
   EXPECT_EQ(pSM->getVelocity(), 0);
   EXPECT_EQ(pSM->getAccel(), 0);
@@ -22,7 +22,7 @@ void initialCheck(CStateMachine *pSM) {
 }
 
 // This method asserts that the pod's current state is UNLOADED.
-void assertUnloaded(CStateMachine *pSM) {
+void assertUnloaded(StateMachine *pSM) {
   EXPECT_EQ(pSM->getCurrState(), UNLOADED);
   EXPECT_EQ(pSM->getBrakeEngagement(), false);
   EXPECT_EQ(pSM->getMotorEngagement(), false);
@@ -32,17 +32,17 @@ void assertUnloaded(CStateMachine *pSM) {
 }
 
 // This method asserts that the pod's current state is LOADED.
-void assertLoaded(CStateMachine *pSM) {
+void assertLoaded(StateMachine *pSM) {
   EXPECT_EQ(pSM->getCurrState(), LOADED);
   EXPECT_EQ(pSM->getBrakeEngagement(), false);
   EXPECT_EQ(pSM->getMotorEngagement(), false);
   EXPECT_EQ(pSM->getLocalizationEngagement(), false);
-  EXPECT_EQ(pSM->getBMSEngagement(), false);
+  EXPECT_EQ(pSM->getBMSEngagement(), true);
   EXPECT_EQ(pSM->getCommunicationsEngagement(), true);
 }
 
 // This method asserts that the pod's current state is SAFE_TO_APPROACH.
-void assertSafeToApproach(CStateMachine *pSM) {
+void assertSafeToApproach(StateMachine *pSM) {
   EXPECT_EQ(pSM->getCurrState(), SAFE_TO_APPROACH);
   EXPECT_EQ(pSM->getBrakeEngagement(), false);
   EXPECT_EQ(pSM->getMotorEngagement(), false);
@@ -52,7 +52,7 @@ void assertSafeToApproach(CStateMachine *pSM) {
 }
 
 // This method asserts that the pod's current state is READY_TO_LAUNCH.
-void assertReadyToLaunch(CStateMachine *pSM) {
+void assertReadyToLaunch(StateMachine *pSM) {
   EXPECT_EQ(pSM->getCurrState(), READY_TO_LAUNCH);
   EXPECT_EQ(pSM->getBrakeEngagement(), false);
   EXPECT_EQ(pSM->getMotorEngagement(), false);
@@ -62,7 +62,7 @@ void assertReadyToLaunch(CStateMachine *pSM) {
 }
 
 // This method asserts that the pod's current state is LAUNCHING.
-void assertLaunching(CStateMachine *pSM) {
+void assertLaunching(StateMachine *pSM) {
   EXPECT_EQ(pSM->getCurrState(), LAUNCHING);
   EXPECT_EQ(pSM->getBrakeEngagement(), false);
   EXPECT_EQ(pSM->getMotorEngagement(), true);
@@ -72,7 +72,7 @@ void assertLaunching(CStateMachine *pSM) {
 }
 
 // This method asserts that the pod's current state is BREAKING.
-void assertBraking(CStateMachine *pSM) {
+void assertBraking(StateMachine *pSM) {
   EXPECT_EQ(pSM->getCurrState(), BRAKING);
   EXPECT_EQ(pSM->getBrakeEngagement(), true);
   EXPECT_EQ(pSM->getMotorEngagement(), false);
@@ -82,7 +82,7 @@ void assertBraking(CStateMachine *pSM) {
 }
 
 // This method asserts that the pod's current state is CRAWLING.
-void assertCrawling(CStateMachine *pSM) {
+void assertCrawling(StateMachine *pSM) {
   EXPECT_EQ(pSM->getCurrState(), CRAWLING);
   EXPECT_EQ(pSM->getBrakeEngagement(), false);
   EXPECT_EQ(pSM->getMotorEngagement(), true);
@@ -92,7 +92,7 @@ void assertCrawling(CStateMachine *pSM) {
 }
 
 // This method asserts that the pod's current state is FAULT.
-void assertFault(CStateMachine *pSM) {
+void assertFault(StateMachine *pSM) {
   EXPECT_EQ(pSM->getCurrState(), FAULT);
   EXPECT_EQ(pSM->getBrakeEngagement(), true);
   EXPECT_EQ(pSM->getMotorEngagement(), false);
@@ -103,7 +103,7 @@ void assertFault(CStateMachine *pSM) {
 
 // This method simulates the pod being in all good condition.
 TEST(PodHealth, HealthyCycle) {
-  CStateMachine *pSM = new CStateMachine();
+  StateMachine *pSM = new StateMachine();
   assertUnloaded(pSM);
 
   pSM->step();
@@ -136,7 +136,7 @@ TEST(PodHealth, HealthyCycle) {
 // This method simulates the pod having a health fault, which should transition
 // its state to FAULT.
 TEST(PodHealth, ExpectFault) {
-  CStateMachine *pSM = new CStateMachine();
+  StateMachine *pSM = new StateMachine();
   assertUnloaded(pSM);
 
   pSM->step();
@@ -167,7 +167,7 @@ TEST(PodHealth, ExpectFault) {
 // This method simulates the pod having a temperature fault, which should
 // transition its state to FAULT.
 TEST(PodHealth, TemperatureFault) {
-  CStateMachine *pSM = new CStateMachine();
+  StateMachine *pSM = new StateMachine();
   assertUnloaded(pSM);
 
   pSM->step();
@@ -190,7 +190,7 @@ TEST(PodHealth, TemperatureFault) {
 // This method simulates the pod having a distance fault, which should
 // transition its state to FAULT.
 TEST(PodHealth, DistanceFault) {
-  CStateMachine *pSM = new CStateMachine();
+  StateMachine *pSM = new StateMachine();
   assertUnloaded(pSM);
 
   pSM->step();
@@ -218,7 +218,7 @@ TEST(PodHealth, DistanceFault) {
 
 // This method simulates the pod transitioning from LOADED to CRAWLING.
 TEST(PodState, LoadedToCrawling) {
-  CStateMachine *pSM = new CStateMachine();
+  StateMachine *pSM = new StateMachine();
   assertUnloaded(pSM);
 
   std::cout << "Transition from UNLOADED to LOADED:" << std::endl;
@@ -234,7 +234,7 @@ TEST(PodState, LoadedToCrawling) {
 
 // This method simulates the pod transitioning from LOADED to BREAKING.
 TEST(PodState, LoadedToBreaking) {
-  CStateMachine *pSM = new CStateMachine();
+  StateMachine *pSM = new StateMachine();
   assertUnloaded(pSM);
 
   pSM->step();
@@ -248,6 +248,6 @@ TEST(PodState, LoadedToBreaking) {
 }
 
 TEST(PodState, StartUnloaded) {
-  CPod *pPod = new CPod();
+  Pod *pPod = new Pod();
   assertUnloaded(pPod->getStateMachine());
 }

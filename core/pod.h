@@ -1,18 +1,19 @@
 #pragma once
-#ifndef C_POD_HPP
-#define C_POD_HPP
+#ifndef POD_H
+#define POD_H
 
-#include "CStateMachine.hpp"
+#include "core/networking/POD.grpc.pb.h"
+#include "state_machine.h"
 
 // This class simulates the pod, and has method skeletons that actually make the
 // pod move and go through its various stages.
-class CPod {
+class Pod {
 private:
-  CStateMachine *m_pStateMachine = new CStateMachine();
+  StateMachine *m_pStateMachine = new StateMachine();
 
 public:
   // get methods
-  CStateMachine *getStateMachine(void) { return this->m_pStateMachine; }
+  StateMachine *getStateMachine(void) { return this->m_pStateMachine; }
 
   // These methods control hardware that deal with batteries, motors, braking,
   // propulsion, etc. We should get in touch with the hardware people and
@@ -22,8 +23,10 @@ public:
   void brake(void);
   void crawl(void);
 
-  // This method checks the pod's state machine's state, and calls one of the 4
-  // methods as appropriate.
+  void handle_packet(pod_networking::PODPacket *packet);
+
+  // This method checks the pod's state machine's state, and calls one of
+  // the 4 methods as appropriate.
   void step(void);
 };
 #endif

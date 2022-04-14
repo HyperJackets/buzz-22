@@ -6,8 +6,8 @@
 // https://github.com/HyperJackets/buzz-22/tree/sean
 
 #pragma once
-#ifndef C_STATE_MACHINE_HPP
-#define C_STATE_MACHINE_HPP
+#ifndef STATE_MACHINE_H
+#define STATE_MACHINE_H
 
 enum State {
   UNLOADED,
@@ -20,7 +20,7 @@ enum State {
   BRAKING
 };
 
-class CStateMachine {
+class StateMachine {
 private:
   // member variables
   // Note that m_ in front of a variable name means that it is a member
@@ -43,7 +43,7 @@ private:
 
 public:
   // constructor
-  CStateMachine();
+  StateMachine();
 
   // methods
 

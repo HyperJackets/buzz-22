@@ -25,13 +25,24 @@ cc_grpc_library(
     deps = [":pod_cc_proto"],
 )
 
-cc_binary(
+cc_library(
     name = "pod_cc_server",
-    srcs = ["server-cc/server.cpp"],
+    srcs = ["server-cc/server.cc"],
+    hdrs = ["server-cc/server.h"],
     defines = ["BAZEL_BUILD"],
     deps = [
         ":pod_cc_grpc",
+        "//core",
         "@com_github_grpc_grpc//:grpc++",
+    ],
+)
+
+cc_binary(
+    name = "cc_server",
+    srcs = ["server-cc/run_server.cc"],
+    deps = [
+        ":pod_cc_server",
+        "//core",
     ],
 )
 
